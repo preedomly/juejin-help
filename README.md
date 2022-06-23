@@ -1,21 +1,4 @@
-<<<<<<< HEAD
- test
-=======
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
- test
-=======
->>>>>>> Stashed changes
-<section align="center">
-  <a href="https://github.com/iDerekLi/juejin-helper" target="_blank">
-    <img src="./resources/logo.svg" alt="稀土掘金" width="260" />
-  </a>
-</section>
 
-<h1 align="center">JuejinHelper-稀土掘金助手</h1>
-
-<<<<<<< Updated upstream
 <p align="center">签到、抽奖、沾喜气、海底掘金游戏、自动化工作流。</p>
 
 ## 使用
@@ -95,16 +78,5 @@ DevTools截图:
 这个项目的存在要感谢所有做出贡献的人。 请先阅读 [[Contribute](CONTRIBUTING.md)]。  
 您可以将任何想法作为 [拉取请求](https://github.com/iDerekLi/juejin-helper/pulls) 或 [GitHub问题](https://github.com/iDerekLi/juejin-helper/issues) 提交。
 
-## 赞赏
-### ☕️微信赞赏！
->>>>>>> Stashed changes
-<img src="https://user-images.githubusercontent.com/24502299/150144723-863ad914-3849-40df-8857-5ec5cd60cacd.JPG" alt="微信赞赏" width="300" />
 
-## 许可
 
-[MIT](./LICENSE)
-<<<<<<< Updated upstream
-=======
->>>>>>> upstream/main
->>>>>>> Stashed changes
->>>>>>> dev
