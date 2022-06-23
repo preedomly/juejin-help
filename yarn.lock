@@ -35,6 +35,18 @@ jsonwebtoken@^8.5.1:
     ms "^2.1.1"
     semver "^5.6.0"
 
+<<<<<<< Updated upstream
+=======
+juejin-helper@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.npmmirror.com/juejin-helper/-/juejin-helper-1.5.1.tgz#416dd622e18daa03fd5ab68f2fb74ec522ce4e8f"
+  integrity sha512-CoC4D0hph59eodM2aO7Brj8hURvFuI8PvrSgZQzyjQ/5BqYK2+ewcMNXxhzYWvHZ4ENMFqfwzHbOU4OelfyJ6Q==
+  dependencies:
+    jsonwebtoken "^8.5.1"
+    node-fetch "^2.6.1"
+    uuid "^8.3.2"
+
+>>>>>>> Stashed changes
 jwa@^1.4.1:
   version "1.4.1"
   resolved "https://registry.npm.taobao.org/jwa/download/jwa-1.4.1.tgz#743c32985cb9e98655530d53641b66c8645b039a"
