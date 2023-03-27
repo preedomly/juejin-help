@@ -427,6 +427,6 @@ run(process.argv.splice(2)).catch(error => {
     content: `<strong>Error</strong><pre>${error.message}</pre>`,
     msgtype: "html"
   });
-
-  throw error;
+  console.error('error:', error)
+  // throw error;
 });
