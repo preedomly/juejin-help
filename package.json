@@ -1,16 +1,7 @@
 {
   "name": "juejin-helper",
-<<<<<<< HEAD
-  "version": "1.4.0",
-=======
-<<<<<<< Updated upstream
-  "version": "1.0.0",
->>>>>>> dev
-  "description": "稀土掘金助手：签到、抽奖、沾喜气、海底淘金、自动化工作流。",
-=======
   "version": "1.5.1",
   "description": "稀土掘金助手：签到、抽奖、沾喜气、消除Bug、海底掘金游戏、自动化工作流。",
->>>>>>> Stashed changes
   "author": "Derek Li",
   "license": "MIT",
   "scripts": {
@@ -20,16 +11,10 @@
   },
   "dependencies": {
     "fast-astar": "^1.0.6",
-<<<<<<< HEAD
     "juejin-helper": "^0.1.4",
-=======
-<<<<<<< Updated upstream
     "jsonwebtoken": "^8.5.1",
     "node-fetch": "^2.6.1",
-=======
     "juejin-helper": "^1.5.1",
->>>>>>> Stashed changes
->>>>>>> dev
     "nodemailer": "^6.7.0"
   },
   "repository": {
