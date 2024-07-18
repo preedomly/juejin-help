@@ -1,19 +1,11 @@
 const JuejinHelper = require("juejin-helper");
 const utils = require("./utils/utils");
-<<<<<<< Updated upstream
 const { Grid, Astar } = require("fast-astar");
 const email = require("./utils/email");
-<<<<<<< HEAD
-=======
-=======
-const {Grid, Astar} = require("fast-astar");
-const pushMessage = require("./utils/pushMessage");
->>>>>>> dev
 const env = require("./utils/env");
 
 class SeaGold {
   gameApi = null;
-<<<<<<< HEAD
 
   nodeRules = [
     { code: 0, hasBounty: false, isWall: false, name: "空地" },
@@ -28,27 +20,6 @@ class SeaGold {
     { code: 13, hasBounty: true, isWall: false, name: "右指令" },
     { code: 14, hasBounty: true, isWall: false, name: "跳跃指令" },
     { code: 15, hasBounty: true, isWall: false, name: "循环指令" }
-=======
-  cookie = "";
-
-  constructor(cookie) {
-    this.cookie = cookie;
-  }
-
-  nodeRules = [
-    {code: 0, hasBounty: false, isWall: false, name: "空地"},
-    {code: 2, hasBounty: true, isWall: false, name: "矿石", isBest: true},
-    {code: 3, hasBounty: false, isWall: false, name: "星星"},
-    {code: 4, hasBounty: false, isWall: true, name: "贝壳"},
-    {code: 5, hasBounty: false, isWall: true, name: "水母"},
-    {code: 6, hasBounty: false, isWall: true, name: "石头"},
-    {code: 10, hasBounty: true, isWall: false, name: "上指令"},
-    {code: 11, hasBounty: true, isWall: false, name: "下指令"},
-    {code: 12, hasBounty: true, isWall: false, name: "左指令"},
-    {code: 13, hasBounty: true, isWall: false, name: "右指令"},
-    {code: 14, hasBounty: true, isWall: false, name: "跳跃指令"},
-    {code: 15, hasBounty: true, isWall: false, name: "循环指令"}
->>>>>>> dev
   ];
 
   debug = false;
@@ -63,11 +34,7 @@ class SeaGold {
   gameInfo = {
     gameId: "",
     mapData: [],
-<<<<<<< HEAD
     curPos: { x: 0, y: 0 },
-=======
-    curPos: {x: 0, y: 0},
->>>>>>> dev
     blockData: {
       moveUp: 0,
       moveDown: 0,
@@ -84,16 +51,12 @@ class SeaGold {
   get isGaming() {
     return this.gameInfo && this.gameInfo.gameId !== "";
   }
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
->>>>>>> dev
 
   resetGame() {
     this.gameInfo = {
       gameId: "",
       mapData: [],
-      curPos: {x: 0, y: 0},
+      curPos: { x: 0, y: 0 },
       blockData: {
         moveUp: 0,
         moveDown: 0,
@@ -106,7 +69,6 @@ class SeaGold {
     };
   }
 
-<<<<<<< HEAD
   restoreGame(gameInfo) {
     this.gameInfo = {
       gameId: gameInfo.gameId,
@@ -114,56 +76,13 @@ class SeaGold {
       curPos: gameInfo.curPos,
       blockData: gameInfo.blockData,
       gameDiamond: gameInfo.gameDiamond
-=======
-<<<<<<< Updated upstream
-    get isGaming() {
-      return this.gameInfo && this.gameInfo.gameId !== "";
->>>>>>> dev
     }
-  }
-
-<<<<<<< HEAD
-  async gameStart() {
-    if (this.isGaming) return;
-    const roleId = Math.ceil(Math.random() * 3);
-    const gameInfo = await this.gameApi.gameStart({ roleId });
-=======
-    async init() {
-      const loginInfo = await juejinGameApi.gameLogin();
-      if (!loginInfo.isAuth) {
-        throw Error("玩家未授权, 请前往掘金授权!");
-      }
-      console.log(`玩家: ${loginInfo.name}`);
-      const info = await juejinGameApi.gameInfo();
-      this.userInfo = {
-        uid: info.userInfo.uid,
-        name: info.userInfo.name,
-        todayDiamond: info.userInfo.todayDiamond,
-        todayLimitDiamond: info.userInfo.todayLimitDiamond,
-        maxTodayDiamond: info.userInfo.maxTodayDiamond
-      };
-      if (info.gameStatus === 1) {
-        this.restoreGame(info.gameInfo);
-      } else {
-        this.resetGame();
-      }
-    }
-=======
-  restoreGame(gameInfo) {
-    this.gameInfo = {
-      gameId: gameInfo.gameId,
-      mapData: this.makeMap(gameInfo.mapData, 6),
-      curPos: gameInfo.curPos,
-      blockData: gameInfo.blockData,
-      gameDiamond: gameInfo.gameDiamond
-    };
   }
 
   async gameStart() {
     if (this.isGaming) return;
     const roleId = Math.ceil(Math.random() * 3);
-    const gameInfo = await this.gameApi.gameStart({roleId});
->>>>>>> dev
+    const gameInfo = await this.gameApi.gameStart({ roleId });
 
     this.gameInfo = {
       roleId,
@@ -174,10 +93,6 @@ class SeaGold {
       gameDiamond: 0
     };
   }
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
->>>>>>> dev
 
   async gameOver() {
     if (!this.isGaming) return;
@@ -198,47 +113,14 @@ class SeaGold {
     return gameOverInfo;
   }
 
-<<<<<<< HEAD
-=======
-<<<<<<< Updated upstream
-    async executeGameCommand() {
-      const bmmap = this.getBMMap();
-      const curNode = this.getNode(this.gameInfo.curPos);
-      const bestNode = this.getBestNode(bmmap);
-      const path = this.getRoutePath(bmmap, curNode, bestNode);
-      const commands = this.getCommands(path);
-      if (commands.length <= 0) {
-        console.log("当局游戏资源耗尽");
-        return false;
-      }
-      const gameCommandInfo = await juejinGameApi.gameCommand(this.gameInfo.gameId, commands);
-      this.gameInfo.curPos = gameCommandInfo.curPos;
-      this.gameInfo.blockData = gameCommandInfo.blockData;
-      this.gameInfo.gameDiamond = gameCommandInfo.gameDiamond;
-      console.log(`curPos(${this.gameInfo.curPos.x},${this.gameInfo.curPos.y}): ${this.gameInfo.gameDiamond} 矿石`);
-      return true;
-=======
->>>>>>> dev
   async executeGameCommand() {
     const bmmap = this.getBMMap();
     const curNode = this.getNode(this.gameInfo.curPos);
     const bestNode = this.getBestNode(bmmap);
     const path = this.getRoutePath(bmmap, curNode, bestNode);
-<<<<<<< HEAD
     const commands = this.getCommands(path);
     if (commands.length <= 0) {
       return false;
-=======
-    if (!Array.isArray(path)) {
-      throw new Error(
-        `路径 ${JSON.stringify(path)} 无法在地图 ${JSON.stringify(this.getMaze(bmmap))} 行进.`
-      );
-    }
-    const commands = this.getCommands(path);
-    if (commands.length <= 0) {
-      return false;
->>>>>>> Stashed changes
->>>>>>> dev
     }
     const gameCommandInfo = await this.gameApi.gameCommand(this.gameInfo.gameId, commands);
     this.gameInfo.curPos = gameCommandInfo.curPos;
@@ -260,112 +142,44 @@ class SeaGold {
       return sx > ex ? "L" : "R";
     }
 
-<<<<<<< HEAD
-=======
-<<<<<<< Updated upstream
-    getCommands(path) {
-      const commands = [];
-      for(let i=0; i<path.length-1; i++) {
-        const cmd = this.getCommand(path[i], path[i+1]);
-        if (!cmd) {
-          throw new Error(`路径错误: ${i}->${i+1}`);
-        }
-        commands.push(cmd);
-=======
->>>>>>> dev
     return null;
   }
 
   getCommands(path) {
     const commands = [];
-<<<<<<< HEAD
     for(let i=0; i<path.length-1; i++) {
       const cmd = this.getCommand(path[i], path[i+1]);
       if (!cmd) {
         throw new Error(`路径错误: ${i}->${i+1}`);
-=======
-    for (let i = 0; i < path.length - 1; i++) {
-      const cmd = this.getCommand(path[i], path[i + 1]);
-      if (!cmd) {
-        throw new Error(`路径错误: ${i}->${i + 1}`);
->>>>>>> Stashed changes
->>>>>>> dev
       }
       commands.push(cmd);
     }
     return commands;
   }
 
-<<<<<<< HEAD
-=======
-<<<<<<< Updated upstream
-    getNodePosition(map, node) {
-      for (let y = 0; y < map.length; y++) {
-        const list = map[y];
-        for (let x = 0; x < list.length; x++) {
-          const cNode = list[x];
-          if (cNode === node) {
-            return { x, y };
-          }
-=======
->>>>>>> dev
   getNodePosition(map, node) {
     for (let y = 0; y < map.length; y++) {
       const list = map[y];
       for (let x = 0; x < list.length; x++) {
         const cNode = list[x];
         if (cNode === node) {
-<<<<<<< HEAD
           return { x, y };
-=======
-          return {x, y};
->>>>>>> Stashed changes
->>>>>>> dev
         }
       }
     }
-<<<<<<< HEAD
     return { x: 0, y: 0 };
   }
-=======
-<<<<<<< Updated upstream
-=======
-    return {x: 0, y: 0};
-  }
-
-  getRoutePath(map, startNode, endNode) {
-    const maze = this.generateMapMaze(map);
-    const startPos = this.getNodePosition(map, startNode);
-    const endPos = this.getNodePosition(map, endNode);
->>>>>>> Stashed changes
->>>>>>> dev
 
   getRoutePath(map, startNode, endNode) {
     const maze = this.generateMapMaze(map);
     const startPos = this.getNodePosition(map, startNode);
     const endPos = this.getNodePosition(map, endNode);
 
-<<<<<<< HEAD
     if (this.debug) {
       console.log("地图", this.getMaze(map));
       console.log("开始位置", startPos);
       console.log("结束位置", endPos);
     }
-=======
-<<<<<<< Updated upstream
-      if (this.debug) {
-        console.log("地图", this.getMaze(map));
-        console.log("开始位置", startPos);
-        console.log("结束位置", endPos);
-      }
-=======
-    const astar = new Astar(maze);
-    const path = astar.search([startPos.x, startPos.y], [endPos.x, endPos.y], {
-      rightAngle: true,
-      optimalResult: true
-    });
->>>>>>> Stashed changes
->>>>>>> dev
 
     const astar = new Astar(maze);
     const path = astar.search(
@@ -377,7 +191,6 @@ class SeaGold {
       }
     );
 
-<<<<<<< HEAD
     return path;
   }
 
@@ -389,51 +202,11 @@ class SeaGold {
       for (let x = 0; x < grid; x++) {
         const cell = mapData[i + x];
         row.push(this.createMapNode(x, y, cell));
-=======
-<<<<<<< Updated upstream
-      return path;
-=======
-  makeMap(mapData, grid = 6) {
-    const map = [];
-    for (let i = 0, y = 0; i < mapData.length; i += grid, y++) {
-      const row = [];
-      map.push(row);
-      for (let x = 0; x < grid; x++) {
-        const cell = mapData[i + x];
-        row.push(this.createMapNode(x, y, cell));
-      }
->>>>>>> Stashed changes
-    }
-
-<<<<<<< Updated upstream
-    makeMap(mapData, grid = 6) {
-      const map = [];
-      for (let i = 0, y = 0; i < mapData.length; i+=grid, y++) {
-        const row = [];
-        map.push(row);
-        for (let x = 0; x < grid; x++) {
-          const cell = mapData[i + x];
-          row.push(this.createMapNode(x, y, cell));
-        }
->>>>>>> dev
       }
     }
     return map;
   }
 
-<<<<<<< HEAD
-=======
-    createMapNode(x, y, secret) {
-      const rule = this.getNodeRule(secret);
-      return {
-        code: rule.code,
-        bounty: rule.hasBounty ? this.getBounty(secret, rule.code) : 0,
-        x,
-        y,
-        isWall: rule.isWall,
-        isBest: !!rule.isBest
-=======
->>>>>>> dev
   createMapNode(x, y, secret) {
     const rule = this.getNodeRule(secret);
     return {
@@ -443,28 +216,6 @@ class SeaGold {
       y,
       isWall: rule.isWall,
       isBest: !!rule.isBest
-<<<<<<< HEAD
-=======
-    };
-  }
-
-  // 获取范围地图
-  getBMMap() {
-    const {mapData, blockData, curPos} = this.gameInfo;
-    const minX = Math.max(curPos.x - blockData.moveLeft, 0);
-    const maxX = Math.min(curPos.x + blockData.moveRight, mapData[0].length - 1);
-    const minY = Math.max(curPos.y - blockData.moveUp, 0);
-    const maxY = Math.min(curPos.y + blockData.moveDown, mapData.length - 1);
-
-    const map = [];
-    for (let y = minY; y <= maxY; y++) {
-      const row = [];
-      map.push(row);
-      for (let x = minX; x <= maxX; x++) {
-        row.push(mapData[y][x]);
->>>>>>> Stashed changes
-      }
->>>>>>> dev
     }
   }
 
@@ -484,36 +235,13 @@ class SeaGold {
       }
     }
 
-<<<<<<< HEAD
     return map;
   }
-=======
-<<<<<<< Updated upstream
-    getNode(pos) {
-      return this.gameInfo.mapData[pos.y][pos.x];
-    }
-=======
-  getBestNode(map) {
-    let bestNode = null;
-    map.forEach((row) => {
-      row.forEach((node) => {
-        if (node.isBest && bestNode === null) {
-          bestNode = node;
-        } else if (node.isBest && node.bounty > bestNode.bounty) {
-          bestNode = node;
-        }
-      });
-    });
-    return bestNode;
-  }
->>>>>>> Stashed changes
->>>>>>> dev
 
   getNode(pos) {
     return this.gameInfo.mapData[pos.y][pos.x];
   }
 
-<<<<<<< HEAD
   getBestNode(map) {
     let bestNode = null;
     map.forEach(row => {
@@ -523,32 +251,6 @@ class SeaGold {
         } else if (node.isBest && node.bounty > bestNode.bounty) {
           bestNode = node;
         }
-=======
-<<<<<<< Updated upstream
-    getMaze(map) {
-      return map.map((row, y) => {
-        return row.map((node, x) => {
-          if (node.isWall) {
-            return 1;
-          } else {
-            return 0;
-          }
-        });
-=======
-  // 生成迷宫
-  generateMapMaze(map) {
-    const grid = new Grid({
-      col: map[0].length,
-      row: map.length
-    });
-
-    map.forEach((row, y) => {
-      row.forEach((node, x) => {
-        if (node.isWall) {
-          grid.set([x, y], "value", 1);
-        }
->>>>>>> Stashed changes
->>>>>>> dev
       });
     });
     return bestNode;
@@ -566,7 +268,6 @@ class SeaGold {
     });
   }
 
-<<<<<<< HEAD
   // 生成迷宫
   generateMapMaze(map) {
     const grid = new Grid({
@@ -581,54 +282,16 @@ class SeaGold {
         }
       });
     });
-=======
-<<<<<<< Updated upstream
-      map.forEach((row, y) => {
-        row.forEach((node, x) => {
-          if (node.isWall) {
-            grid.set([x, y], 'value', 1);
-          }
-        });
-      });
-=======
-  getNodeRule(secret) {
-    return this.nodeRules.find((rule) => {
-      const reg = new RegExp(`^${rule.code}`);
-      return reg.test(secret);
-    });
-  }
->>>>>>> Stashed changes
->>>>>>> dev
 
     return grid;
   }
 
-<<<<<<< HEAD
   getNodeRule(secret) {
     return this.nodeRules.find(rule => {
       const reg = new RegExp(`^${rule.code}`);
       return reg.test(secret);
     });
   }
-=======
-<<<<<<< Updated upstream
-    getNodeRule(secret) {
-      return this.nodeRules.find(rule => {
-        const reg = new RegExp(`^${rule.code}`);
-        return reg.test(secret);
-      });
-=======
-  async run() {
-    const juejin = new JuejinHelper();
-    await juejin.login(this.cookie);
-    this.gameApi = juejin.seagold();
-
-    const loginInfo = await this.gameApi.gameLogin();
-    if (!loginInfo.isAuth) {
-      throw Error(`掘友 ${loginInfo.name} 未授权, 请前往掘金授权!`);
->>>>>>> Stashed changes
-    }
->>>>>>> dev
 
   getBounty(secret, key) {
     const reg = new RegExp(`^${key}([0-9]*)`);
@@ -679,30 +342,10 @@ class SeaGold {
 
         runTime = new Date();
       }
-<<<<<<< HEAD
 
       return await this.gameOver();
     }
 
-=======
-<<<<<<< Updated upstream
-      return await seaGold.gameOver();
-    } catch (e) {
-      await seaGold.gameOver();
-      throw e;
-    }
-  }
-  console.log(`今日开采限制: ${seaGold.userInfo.todayLimitDiamond} 矿石`);
-  if (seaGold.userInfo.todayDiamond >= seaGold.userInfo.todayLimitDiamond) {
-    console.log(`今日开采已达上限!`);
-  } else {
-=======
-
-      return await this.gameOver();
-    };
-
->>>>>>> Stashed changes
->>>>>>> dev
     const maxZeroCount = 5;
     let zeroCount = 0;
 
@@ -732,7 +375,6 @@ class SeaGold {
       runTime = new Date();
     }
 
-<<<<<<< HEAD
     await juejin.logout();
   }
 
@@ -746,12 +388,6 @@ class SeaGold {
 ${userInfo.todayDiamond < userInfo.todayLimitDiamond ? `今日获取矿石数 ${userInfo.todayDiamond}` : "今日获取已达上限"}
 ${this.history.length ? `\n游戏记录\n${gameLives}` : ""}
 `.trim();
-=======
-<<<<<<< Updated upstream
-    if (seaGold.userInfo.todayDiamond >= seaGold.userInfo.todayLimitDiamond) {
-      console.log(`今日开采已达上限!`);
-    }
->>>>>>> dev
   }
 }
 
@@ -774,50 +410,6 @@ async function run(args) {
 
 run(process.argv.splice(2)).catch(error => {
   email({
-=======
-    await juejin.logout();
-  }
-
-  toString() {
-    const userInfo = this.userInfo;
-    const gameLives = this.history
-      .map((game) => `${game.gameId}\n  挖取 ${game.gameDiamond}\n  获得 ${game.realDiamond}`)
-      .join("\n");
-
-    return `
-掘友: ${userInfo.name}
-今日限制矿石数 ${userInfo.todayLimitDiamond}
-${
-  userInfo.todayDiamond < userInfo.todayLimitDiamond
-    ? `今日获取矿石数 ${userInfo.todayDiamond}`
-    : "今日获取已达上限"
-}
-${this.history.length ? `\n游戏记录\n${gameLives}` : ""}
-`.trim();
-  }
-}
-
-async function run(args) {
-  const cookies = utils.getUsersCookie(env);
-  for (let cookie of cookies) {
-    const seaGold = new SeaGold(cookie);
-
-    await utils.wait(utils.randomRangeNumber(1000, 5000)); // 初始等待1-5s
-    await seaGold.run();
-
-    const content = seaGold.toString();
-    console.log(content);
-
-    pushMessage({
-      subject: "海底掘金游戏",
-      text: content
-    });
-  }
-}
-
-run(process.argv.splice(2)).catch((error) => {
-  pushMessage({
->>>>>>> Stashed changes
     subject: "海底掘金游戏",
     html: `
 <strong>Error</strong>
