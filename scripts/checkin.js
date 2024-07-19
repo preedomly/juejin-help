@@ -30,6 +30,8 @@ class CheckIn {
       await juejin.login(env.COOKIE);
     } catch (e) {
       console.error(e);
+      console.error(env.COOKIE);
+      
       throw new Error("登录失败, 请尝试更新Cookies!");
     }
 
