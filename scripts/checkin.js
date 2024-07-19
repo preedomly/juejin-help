@@ -28,9 +28,10 @@ class CheckIn {
     const juejin = new JuejinHelper();
     try {
       await juejin.login(env.COOKIE);
+      console.log(env.COOKIE);
     } catch (e) {
       console.error(e);
-      console.error(env.COOKIE);
+    
       
       throw new Error("登录失败, 请尝试更新Cookies!");
     }
